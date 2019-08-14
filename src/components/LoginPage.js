@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import Auth from '../Auth';
 
 class Login extends React.Component {
   state = {
@@ -25,17 +26,17 @@ class Login extends React.Component {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify(data),
       }
     );
+    const resJson = await res.json();
 
     if (res.status !== 200) {
       // Error
-      const resJson = await res.json();
       const err = resJson.err.toString();
       this.setState({ errorMessage: err });
     } else {
+      Auth.authenticateUser(resJson.token);
       this.props.loginCallback();
     }
   }

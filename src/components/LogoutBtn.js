@@ -1,11 +1,16 @@
 import React from 'react';
 
-const LogoutBtn = ({ loggedIn, handleLogout }) => {
+import Auth from '../Auth'
+
+const LogoutBtn = ({ loggedIn, logoutCallback }) => {
   return (
     <div>
     {
       loggedIn && (
-        <button onClick={handleLogout}>
+        <button onClick={() => {
+          Auth.deauthenticateUser();
+          logoutCallback();
+        }}>
           Logout
         </button>
       )

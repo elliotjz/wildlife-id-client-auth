@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from '../Auth'
 
 class Account extends React.Component {
   state = {
@@ -10,9 +11,22 @@ class Account extends React.Component {
   }
 
   getUserDetails = async () => {
-    const res = await fetch('http://localhost:8080/auth/me', {
-      credentials: 'include',
+    // Get auth token
+    const token = Auth.getToken();
+
+    // Request user data
+
+    // You must include the JWT token as the authorization
+    // header whenever requesting resources from protected
+    // endpoints.
+    const res = await fetch('http://localhost:8080/users/me',
+    {
+      headers: {
+        Authorization: `JWT ${token}`,
+      }
     });
+
+    // TODO: Error checking
     const resJson = await res.json();
     this.setState({
       user: resJson.user

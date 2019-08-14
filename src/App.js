@@ -13,35 +13,21 @@ import LogoutBtn from './components/LogoutBtn';
 import HomePage from './components/HomePage';
 import AccountPage from './components/AccountPage';
 import RegisterPage from './components/RegisterPage';
+import Auth from './Auth'
 
 class App extends React.Component {
-  state = {
-    loggedIn: false,
-  }
-
-  loginCallback = () => {
-    this.setState({
-      loggedIn: true,
-    })
-  }
-
-  handleLogout = async () => {
-    const res = await fetch('http://localhost:8080/auth/logout', {
-      credentials: 'include',
-    });
-    if (res.status === 200) {
-      this.setState({
-        loggedIn: false,
-      })
-    }
+  reloadComponent = () => {
+    this.forceUpdate();
   }
 
   render() {
-    const { loggedIn } = this.state;
     return (
       <Router>
         <div className="App">
-          <LogoutBtn loggedIn={loggedIn} handleLogout={this.handleLogout} />
+          <LogoutBtn
+            loggedIn={Auth.isUserAuthenticated()}
+            logoutCallback={this.reloadComponent}
+          />
           <ul>
             <li>
               <Link to="/">Home Page</Link>
@@ -55,22 +41,22 @@ class App extends React.Component {
             <Route
               exact
               path="/login"
-              render={props => loggedIn ? (
+              render={props => Auth.isUserAuthenticated() ? (
                 <Redirect to={{ pathname: "/account" }} />
               ) : (
-                <LoginPage {...props} loginCallback={this.loginCallback}/>
+                <LoginPage {...props} loginCallback={this.reloadComponent}/>
               )}/>
             <Route
               exact
               path="/register"
-              render={props => loggedIn ? (
+              render={props => Auth.isUserAuthenticated() ? (
                 <Redirect to={{ pathname: "/account" }} />
               ) : (
-                <RegisterPage {...props} loginCallback={this.loginCallback}/>
+                <RegisterPage {...props} loginCallback={this.reloadComponent}/>
               )}/>
             <Route
               render={() =>
-                loggedIn ? <AccountPage /> : <Redirect to={{ pathname: "/login" }} />
+                Auth.isUserAuthenticated() ? <AccountPage /> : <Redirect to={{ pathname: "/login" }} />
               }/>
           </Switch>
         </div>
