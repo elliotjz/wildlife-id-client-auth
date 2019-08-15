@@ -5,7 +5,7 @@ import Auth from '../Auth';
 class Register extends React.Component {
   state = {
     email: "",
-    name: "",
+    username: "",
     password: "",
     errorMessage: "",
   }
@@ -18,9 +18,9 @@ class Register extends React.Component {
 
   registerSubmit = async event => {
     event.preventDefault();
-    const { email, name, password } = this.state;
-    const data = { email, name, password };
-    const res = await fetch('http://localhost:8080/auth/register',
+    const { email, username, password } = this.state;
+    const data = { email, username, password };
+    const res = await fetch('https://wildlife-id-api-staging.herokuapp.com/auth/register',
       {
         method: 'POST',
         cache: 'no-cache',
@@ -57,10 +57,10 @@ class Register extends React.Component {
               />
             </div>
             <div>
-              <label>Name</label>
+              <label>Username</label>
               <input
                 type="text"
-                name="name"
+                name="username"
                 onChange={this.onChange}
               />
             </div>
