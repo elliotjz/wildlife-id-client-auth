@@ -19,7 +19,7 @@ class Account extends React.Component {
     // You must include the JWT token as the authorization
     // header whenever requesting resources from protected
     // endpoints.
-    const res = await fetch('https://wildlife-id-api-staging.herokuapp.com/users/me',
+    const res = await fetch('https://wildlife-id-api.herokuapp.com/users/me',
     {
       headers: {
         Authorization: `JWT ${token}`,

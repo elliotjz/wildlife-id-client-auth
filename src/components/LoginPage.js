@@ -19,7 +19,7 @@ class Login extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
     const data = { email, password };
-    const res = await fetch('https://wildlife-id-api-staging.herokuapp.com/auth/login',
+    const res = await fetch('https://wildlife-id-api.herokuapp.com/auth/login',
       {
         method: 'POST',
         cache: 'no-cache',

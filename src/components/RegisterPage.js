@@ -26,7 +26,7 @@ class Register extends React.Component {
       userType: 'volunteer',  // Everyone can be a volunteer for now. We will need to 
                               // develop a way to register admins, organisations etc.
     };
-    const res = await fetch('https://wildlife-id-api-staging.herokuapp.com/auth/register',
+    const res = await fetch('https://wildlife-id-api.herokuapp.com/auth/register',
       {
         method: 'POST',
         cache: 'no-cache',
